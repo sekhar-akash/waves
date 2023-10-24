@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 # Create your models here.
 
 def upload_to_directory(instance, filename):
-    return f'posts/{instance.user.username}/{filename}'
+    return f'posts/{instance.creator.username}/{filename}'
 
 class Posts(models.Model):
     creator = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
@@ -16,7 +16,7 @@ class Posts(models.Model):
     is_blocked = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.creator
+        return self.creator.username
     
 class Comments(models.Model):
     post = models.ForeignKey(Posts,on_delete=models.CASCADE)

@@ -48,15 +48,3 @@ class UpdateUserView(APIView):
         except User.DoesNotExist:
             return Response("User not found in the database.", status=status.HTTP_404_NOT_FOUND)
         
-
-class UpdateProfilePicView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def put(self, request):
-        user = request.user
-        serializer = ProfilePictureUpdateSerializer(user, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "Successfully Updated..."}, status=status.HTTP_200_OK)
-        return Response({"message": "Something Went Wrong..."}, status=status.HTTP_400_BAD_REQUEST)
