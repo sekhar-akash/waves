@@ -36,11 +36,7 @@ class UserAccountManager(BaseUserManager):
 def upload_to(instance, filename):
     return 'profile/{filename}'.format(filename=filename)
 
-GENDER_CHOICES = [
-    ('M', ('Male')),
-    ('F', ('Female')),
-    ('O', ('Other')),
-]
+
 
 class UserAccount(AbstractBaseUser,PermissionsMixin):
     full_name = models.CharField(max_length=100,blank=True,null=True)
@@ -48,7 +44,6 @@ class UserAccount(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(unique=True, max_length=100)
     phone = models.CharField(max_length=30,null=True,blank=True)
     profile_image = models.ImageField(blank=True, null=True, upload_to=upload_to, default='user.png')
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
 
     date_joined = models.DateTimeField(auto_now_add=True,blank=True,null=True)
     last_login = models.DateTimeField(auto_now_add=True,blank=True,null=True)
