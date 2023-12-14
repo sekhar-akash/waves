@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.utils.timesince import timesince
 # Create your models here.
 
+
+
 def upload_to_directory(instance, filename):
     return f'posts/{instance.creator.username}/{filename}'
 
@@ -23,7 +25,7 @@ class Posts(models.Model):
         return self.likes.count()
     
 class Comments(models.Model):
-    post = models.ForeignKey(Posts,on_delete=models.CASCADE)
+    post = models.ForeignKey(Posts,related_name='comments',on_delete=models.CASCADE)
     user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
@@ -42,3 +44,4 @@ class Follow(models.Model):
 
     def __str__(self):
         return f'{self.follower} -> {self.following}'
+    
